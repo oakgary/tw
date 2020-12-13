@@ -10,7 +10,7 @@ function getUnitSplits(numberOfReadyScavs) {
       .match(/\(([^)]+)\)/)[1];
 
     if (UNIT === "SPEAR" || UNIT === "SWORD") {
-      if (numberOfUnits > 100) numberOfUnits -= NUMBER_OF_DUAl_TO_PRESERVE;
+      if (numberOfUnits > NUMBER_OF_DUAl_TO_PRESERVE) numberOfUnits -= NUMBER_OF_DUAl_TO_PRESERVE;
     }
 
     split = Math.abs(Math.floor(numberOfUnits / numberOfReadyScavs));
