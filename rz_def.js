@@ -1,6 +1,6 @@
 // possible: SPEAR, SWORD, AXE, LIGHT, HEAVY
 const UNITS_TO_SEND = ["SPEAR", "SWORD", "AXE", "LIGHT", "HEAVY"];
-const NUMBER_OF_DUAl_TO_PRESERVE = 0;
+const NUMBER_OF_DUAl_TO_PRESERVE = 200;
 
 function getUnitSplits(numberOfReadyScavs) {
   const splits = {};
