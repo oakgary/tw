@@ -1,5 +1,5 @@
 // possible: SPEAR, SWORD, AXE, LIGHT, HEAVY
-const UNITS_TO_SEND = ["SPEAR", "SWORD", "AXE"];
+const UNITS_TO_SEND = ["SPEAR", "AXE", "LIGHT"];
 
 function getUnitSplits(numberOfReadyScavs) {
   const splits = {};
