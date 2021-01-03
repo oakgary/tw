@@ -272,8 +272,12 @@ function fillTroopTable(scavenge, unitsToSendByUnitType) {
 function sumUpUnitsToSendByUnitType(unitsToSendByUnitTypeAndScavenge) {
   const sumOfUnitsToSendByUnitType = {};
   UNIT_TYPES.forEach((unitType) => (sumOfUnitsToSendByUnitType[unitType] = 0));
-  Object.keys(unitsToSendByUnitTypeAndScavenge).forEach((unitType) => {
-    sumOfUnitsToSendByUnitType[unitType] += unitsToSendByUnitTypeAndScavenge[unitType];
+  Object.keys(unitsToSendByUnitTypeAndScavenge).forEach((scavenge) => {
+    Object.keys(unitsToSendByUnitTypeAndScavenge[scavenge]).forEach(
+      (unitsToSendByUnitType) => {
+        sumOfUnitsToSendByUnitType[unitType] += unitsToSendByUnitType[unitType];
+      }
+    );
   });
   return sumOfUnitsToSendByUnitType;
 }
@@ -293,6 +297,7 @@ function fillTroopDisplay() {
     unitsToSendByUnitTypeAndScavenge[scavenge] = unitsToSendByUnitType;
   });
 
+  console.log({ unitsToSendByUnitTypeAndScavenge });
   Object.keys(unitsToSendByUnitTypeAndScavenge).forEach((scavenge) => {
     fillTroopTable(scavenge, unitsToSendByUnitTypeAndScavenge[scavenge]);
   });
@@ -300,6 +305,8 @@ function fillTroopDisplay() {
   const sumOfUnitsToSendByUnitType = sumUpUnitsToSendByUnitType(
     unitsToSendByUnitTypeAndScavenge
   );
+  console.log({ sumOfUnitsToSendByUnitType });
+
   fillTroopDisplay("sum", sumOfUnitsToSendByUnitType);
 }
 
