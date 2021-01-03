@@ -271,9 +271,9 @@ function fillTroopTable(scavenge, unitsToSendByUnitType) {
 
 function sumUpUnitsToSendByUnitType(unitsToSendByUnitTypeAndScavenge) {
   const sumOfUnitsToSendByUnitType = {};
-  UNIT_TYPES.forEach((unitType) => (sumOfUnitsToSend[unitType] = 0));
+  UNIT_TYPES.forEach((unitType) => (sumOfUnitsToSendByUnitType[unitType] = 0));
   Object.keys(unitsToSendByUnitTypeAndScavenge).forEach((unitType) => {
-    sumOfUnitsToSend[unitType] += unitsToSendByUnitTypeAndScavenge[unitType];
+    sumOfUnitsToSendByUnitType[unitType] += unitsToSendByUnitTypeAndScavenge[unitType];
   });
   return sumOfUnitsToSendByUnitType;
 }
