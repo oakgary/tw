@@ -272,13 +272,14 @@ function fillTroopTable(scavenge, unitsToSendByUnitType) {
 function sumUpUnitsToSendByUnitType(unitsToSendByUnitTypeAndScavenge) {
   const sumOfUnitsToSendByUnitType = {};
   UNIT_TYPES.forEach((unitType) => (sumOfUnitsToSendByUnitType[unitType] = 0));
+
   Object.keys(unitsToSendByUnitTypeAndScavenge).forEach((scavenge) => {
-    Object.keys(unitsToSendByUnitTypeAndScavenge[scavenge]).forEach(
-      (unitsToSendByUnitType) => {
-        sumOfUnitsToSendByUnitType[unitType] += unitsToSendByUnitType[unitType];
-      }
-    );
+    const unitsToSendByUnitType = unitsToSendByUnitTypeAndScavenge[scavenge];
+    Object.keys(unitsToSendByUnitType).forEach((unitType) => {
+      sumOfUnitsToSendByUnitType[unitType] += unitsToSendByUnitType[unitType];
+    });
   });
+
   return sumOfUnitsToSendByUnitType;
 }
 
@@ -307,7 +308,7 @@ function fillTroopDisplay() {
   );
   console.log({ sumOfUnitsToSendByUnitType });
 
-  fillTroopDisplay("sum", sumOfUnitsToSendByUnitType);
+  fillTroopTable("sum", sumOfUnitsToSendByUnitType);
 }
 
 function loadDefaultValues() {
