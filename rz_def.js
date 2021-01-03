@@ -1,6 +1,10 @@
 // possible: SPEAR, SWORD, AXE, LIGHT, HEAVY
 const UNITS_TO_SEND = ["SPEAR", "SWORD", "AXE", "LIGHT"];
 const NUMBER_OF_DUAl_TO_PRESERVE = 0;
+const IS_PALA_DEF =
+  $(`[data-unit=knight].units-entry-all`)
+    .text()
+    .match(/\(([^)]+)\)/)[1] === 1;
 
 function getUnitSplits(numberOfReadyScavs) {
   const splits = {};
@@ -10,7 +14,11 @@ function getUnitSplits(numberOfReadyScavs) {
       .match(/\(([^)]+)\)/)[1];
 
     if (UNIT === "SPEAR" || UNIT === "SWORD") {
-      if (numberOfUnits > NUMBER_OF_DUAl_TO_PRESERVE) numberOfUnits -= NUMBER_OF_DUAl_TO_PRESERVE;
+      if (IS_PALA_DEF) {
+        continue;
+      }
+      if (numberOfUnits > NUMBER_OF_DUAl_TO_PRESERVE)
+        numberOfUnits -= NUMBER_OF_DUAl_TO_PRESERVE;
     }
 
     split = Math.abs(Math.floor(numberOfUnits / numberOfReadyScavs));
