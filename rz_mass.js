@@ -412,21 +412,9 @@ async function sendScavenges() {
 }
 
 (async () => {
-  const IS_ON_MASS_SCAVENGE_SCREEN =
-    window.location.href.indexOf("screen=place&mode=scavenge_mass") > 0;
   const IS_INTERFACE_LOADED = $("#troopSelectionTable").length > 0;
 
-  console.log({ IS_ON_MASS_SCAVENGE_SCREEN, IS_INTERFACE_LOADED });
-
-  if (!IS_ON_MASS_SCAVENGE_SCREEN) {
-    navigateToMassScavenge();
-  } else if (!IS_INTERFACE_LOADED) {
+  if (!IS_INTERFACE_LOADED) {
     initiateInterface();
-  } else {
-    UI.InfoMessage(
-      "Script bereits initialisiert. Bitte über Interface starten.",
-      5000,
-      true
-    );
   }
 })();
