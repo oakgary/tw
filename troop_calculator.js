@@ -1,8 +1,11 @@
 let calc = {};
 
 $(".row_marker").each((i, village) => {
+  const hasBold =
+    $(village).children("tr[style='font-weight: bold']").length > 0;
+
   $(village)
-    .children("tr:first-child")
+    .children(hasBold ? "tr[style='font-weight: bold']" : "tr:first-child")
     .each((j, total) => {
       $(total)
         .children(".unit-item")
