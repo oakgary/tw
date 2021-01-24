@@ -1,7 +1,6 @@
 let calc = {};
 
 $(".row_marker").each((i, village) => {
-  console.log("Village");
   $(village)
     .children("tr:first-child")
     .each((j, total) => {
@@ -12,19 +11,18 @@ $(".row_marker").each((i, village) => {
           calc[k] ? (calc[k] += val) : (calc[k] = val);
         });
     });
-  console.log("");
 });
 
-console.log(calc);
-
-$(`<thead>
+if (Object.keys(calc).length > 0) {
+  $(`<thead>
   <tr>
-    <th>Gesamt</th>
+  <th>Gesamt</th>
+  <th></th>
+  ${Object.values(calc).map(
+    (val) => ` <th style="text-align: center" width="35">${val}</th>`
+  )}
     <th></th>
-    ${Object.values(calc).map(
-      (val) => ` <th style="text-align: center" width="35">${val}</th>`
-    )}
-    <th></th>
-  </tr>
-</thead>
-`).insertAfter("#units_table > thead");
+    </tr>
+    </thead>
+    `).insertAfter("#units_table > thead");
+}
