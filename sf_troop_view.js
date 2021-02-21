@@ -60,8 +60,10 @@ const setTroopsToLocalStorage = (troops) => {
 };
 
 const addCurrentUserToLocalStorage = () => {
-  const troopValues = getTroops();
   const userName = getUserName();
+  if(userName === 'Mitglied auswählen') return;
+
+  const troopValues = getTroops();
   const isoDate = getIsoDate();
   const currentTroops = getTroopsFromLocalStorage();
   const newTroops = {
