@@ -106,7 +106,6 @@ const renderTroopsAsTable = () => {
   const currentTroops = getTroopsFromLocalStorage();
 
   if (Object.keys(currentTroops).length > 0) {
-    console.log(currentTroops);
     $(`<button type="button" class="collapsible">SF-Truppen</button>
 <div class="table-responsive" style="display: none;">
    <table class="vis w100">
@@ -135,7 +134,7 @@ const renderTroopsAsTable = () => {
             <td>${troopValues.katas100p}</td>
             <td>${lastUpdatedStr}</td>
          </tr>`;
-         })}
+         }).join('')}
       </tbody>
    </table>
 </div>`).insertAfter("[name='player_id']");
