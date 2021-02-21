@@ -61,7 +61,7 @@ const setTroopsToLocalStorage = (troops) => {
 
 const addCurrentUserToLocalStorage = () => {
   const userName = getUserName();
-  if(userName === 'Mitglied auswählen') return;
+  if (userName === "Mitglied auswählen") return;
 
   const troopValues = getTroops();
   const isoDate = getIsoDate();
@@ -106,6 +106,68 @@ const renderTroopsAsTable = () => {
   const currentTroops = getTroopsFromLocalStorage();
 
   if (Object.keys(currentTroops).length > 0) {
+    const totalCounters = {
+      off3000: 0,
+      off4000: 0,
+      off5000: 0,
+      off6000p: 0,
+      katas30x100: 0,
+      katas100p: 0,
+    };
+
+    const currentTroopsOrderedByUserName = Object.keys(currentTroops)
+      .sort()
+      .reduce((obj, key) => {
+        obj[key] = currentTroops[key];
+        return obj;
+      }, {});
+
+    const userRows = Object.keys(currentTroopsOrderedByUserName)
+      .map((userName) => {
+        const {
+          off3000,
+          off4000,
+          off5000,
+          off6000p,
+          katas30x100,
+          katas100p,
+        } = currentTroops[userName].troopValues;
+
+        totalCounters.off3000 += off3000;
+        totalCounters.off4000 += off4000;
+        totalCounters.off5000 += off5000;
+        totalCounters.off6000p += off6000p;
+        totalCounters.katas30x100 += katas30x100;
+        totalCounters.katas100p += katas100p;
+
+        const lastUpdated = currentTroops[userName].lastUpdated;
+        const lastUpdatedStr = isoDateToString(lastUpdated);
+        return `<tr>
+     <td>${userName}</td>
+     <td>${off3000}</td>
+     <td>${off4000}</td>
+     <td>${off5000}</td>
+     <td>${off6000p}</td>
+     <td>${katas30x100}</td>
+     <td>${katas100p}</td>
+     <td>${lastUpdatedStr}</td>
+  </tr>`;
+      })
+      .join("");
+
+    console.log(totalCounters);
+
+    const totalRow = `<tr>
+    <th style="font-weight: bold;">Gesamt</th>
+    <th>${totalCounters.off3000}</th>
+    <th>${totalCounters.off4000}</th>
+    <th>${totalCounters.off5000}</th>
+    <th>${totalCounters.off6000p}</th>
+    <th>${totalCounters.katas30x100}</th>
+    <th>${totalCounters.katas100p}</th>
+    <th>${isoDateToString(new Date().toISOString())}</th>
+ </tr>`;
+
     $(`<button type="button" class="collapsible">SF-Truppen</button>
 <div class="table-responsive" style="display: none;">
    <table class="vis w100">
@@ -120,21 +182,8 @@ const renderTroopsAsTable = () => {
             <th>100+ Katas</th>
             <th>Zuletzt aktualisiert</th>
          </tr>
-         ${Object.keys(currentTroops).map((userName) => {
-           const troopValues = currentTroops[userName].troopValues;
-           const lastUpdated = currentTroops[userName].lastUpdated;
-           const lastUpdatedStr = isoDateToString(lastUpdated);
-           return `<tr>
-            <td>${userName}</td>
-            <td>${troopValues.off3000}</td>
-            <td>${troopValues.off4000}</td>
-            <td>${troopValues.off5000}</td>
-            <td>${troopValues.off6000p}</td>
-            <td>${troopValues.katas30x100}</td>
-            <td>${troopValues.katas100p}</td>
-            <td>${lastUpdatedStr}</td>
-         </tr>`;
-         }).join('')}
+         ${userRows}
+         ${totalRow}
       </tbody>
    </table>
 </div>`).insertAfter("[name='player_id']");
