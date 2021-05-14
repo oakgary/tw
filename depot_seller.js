@@ -1,7 +1,7 @@
 const RESSOURCES_TO_SELL = ["iron", "wood", "stone"];
 const MAX_RESSOURCE_RATIO = 64;
 const SELL_AMOUNT = 900;
-const INTERVALL_IN_SECONDS = 60;
+const INTERVALL_IN_SECONDS = 30;
 
 function getRandomSleepTime(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -77,7 +77,7 @@ async function scriptRunner() {
       await sleep(getRandomSleepTime(200, 400));
       triggerSell();
     }
-    await sleep(getRandomSleepTime(4000, 6000));
+    await sleep(getRandomSleepTime(5000, 6000));
     if (getAvailableMerchants() === 0) break;
   }
 }
