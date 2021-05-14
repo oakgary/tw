@@ -2,6 +2,7 @@ const RESSOURCES_TO_SELL = ["iron", "wood", "stone"];
 const MAX_RESSOURCE_RATIO = 64;
 const SELL_AMOUNT = 900;
 const INTERVALL_IN_SECONDS = 10;
+const AMOUNT_TO_IGNORE_RATIO = 3000;
 
 function getRandomSleepTime(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -20,6 +21,14 @@ function getRessourceRatio(ressource) {
     $(`#premium_exchange_rate_${ressource} > div:nth-child(1)`).text().trim(),
     10
   );
+}
+
+function getRessourceValue(ressource) {
+  return parseInt($(`#${ressource}`).text().trim(), 10);
+}
+
+function getStorageCapacity() {
+  return parseInt($("#storage").text().trim(), 10);
 }
 
 function getAvailableMerchants() {
@@ -76,7 +85,8 @@ async function scriptRunner() {
     return;
   }
   for (const RESSOURCE of RESSOURCES_TO_SELL) {
-    if (getRessourceRatio(RESSOURCE) <= MAX_RESSOURCE_RATIO) {
+    const ressourceValue = getRessourceValue(RESSOURCE); 
+    if (ressourceValue >= SELL_AMOUNT && (getRessourceRatio(RESSOURCE) <= MAX_RESSOURCE_RATIO || getStorageCapacity() - ressourceValue < AMOUNT_TO_IGNORE_RATIO)) {
       insertRessourceValue(RESSOURCE, SELL_AMOUNT);
       await sleep(getRandomSleepTime(200, 400));
       await triggerSell();
