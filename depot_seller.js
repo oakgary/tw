@@ -26,8 +26,9 @@ function getAvailableMerchants() {
   return parseInt($("#market_merchant_available_count").text().trim(), 10);
 }
 
-function triggerSell() {
+async function triggerSell() {
   $("#premium_exchange_form > input")[0].click();
+  await sleep(getRandomSleepTime(700, 1000));
   $(".btn-confirm-yes")[0].click();
 }
 
@@ -75,7 +76,7 @@ async function scriptRunner() {
     if (getRessourceRatio(RESSOURCE) <= MAX_RESSOURCE_RATIO) {
       insertRessourceValue(RESSOURCE, SELL_AMOUNT);
       await sleep(getRandomSleepTime(200, 400));
-      triggerSell();
+      await triggerSell();
     }
     await sleep(getRandomSleepTime(5000, 6000));
     if (getAvailableMerchants() === 0) break;
