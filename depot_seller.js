@@ -70,6 +70,7 @@ function resetCountdown() {
 }
 
 async function scriptRunner() {
+  startButton.innerHTML = "Kaufprozess läuft...";
   if (getAvailableMerchants() === 0) {
     resetCountdown();
     return;
