@@ -44,9 +44,6 @@ function addStartButton() {
   $("#script_start_button").click(function () {
     $("#script_start_button").prop("disabled", true);
     scriptRunner();
-    setInterval(() => {
-      scriptRunner();
-    }, INTERVALL_IN_SECONDS * 1000);
   });
 }
 
@@ -58,6 +55,7 @@ function resetCountdown() {
     const distanceInMs = nextCountdownDate - new Date();
     if (distanceInMs < 1000) {
       clearInterval(intv);
+      scriptRunner();
       return;
     }
 
