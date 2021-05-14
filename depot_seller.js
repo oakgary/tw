@@ -70,16 +70,15 @@ function resetCountdown() {
 
 async function scriptRunner() {
   resetCountdown();
+  if (getAvailableMerchants() === 0) return;
   for (const RESSOURCE of RESSOURCES_TO_SELL) {
-    const availableMerchants = getAvailableMerchants();
-    if (availableMerchants === 0) return;
-    const ressourceRatio = getRessourceRatio(RESSOURCE);
-    if (ressourceRatio < MAX_RESSOURCE_RATIO) {
+    if (getRessourceRatio(RESSOURCE) < MAX_RESSOURCE_RATIO) {
       insertRessourceValue(RESSOURCE, SELL_AMOUNT);
       await sleep(getRandomSleepTime(200, 400));
       triggerSell();
     }
     await sleep(getRandomSleepTime(4000, 6000));
+    if (getAvailableMerchants() === 0) break;
   }
 }
 
