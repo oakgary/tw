@@ -72,7 +72,7 @@ async function scriptRunner() {
   resetCountdown();
   if (getAvailableMerchants() === 0) return;
   for (const RESSOURCE of RESSOURCES_TO_SELL) {
-    if (getRessourceRatio(RESSOURCE) < MAX_RESSOURCE_RATIO) {
+    if (getRessourceRatio(RESSOURCE) <= MAX_RESSOURCE_RATIO) {
       insertRessourceValue(RESSOURCE, SELL_AMOUNT);
       await sleep(getRandomSleepTime(200, 400));
       triggerSell();
