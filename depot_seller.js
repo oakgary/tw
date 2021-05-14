@@ -28,8 +28,10 @@ function getAvailableMerchants() {
 
 async function triggerSell() {
   $("#premium_exchange_form > input")[0].click();
-  await sleep(getRandomSleepTime(700, 1000));
+  await sleep(getRandomSleepTime(500, 700));
   $(".btn-confirm-yes")[0].click();
+  await sleep(getRandomSleepTime(200, 300));
+  $(".btn-confirm-no:visible")[0];
 }
 
 function addStartButton() {
