@@ -65,12 +65,12 @@ function resetCountdown() {
     const seconds = Math.floor((distanceInMs % (1000 * 60)) / 1000);
 
     script_start_button.innerHTML =
-      "Nächste Verkauf in: " + minutes + "m " + seconds + "s";
+      "Nächster Durchlauf in: " + minutes + "m " + seconds + "s";
   }, 1000);
 }
 
 async function scriptRunner() {
-  startButton.innerHTML = "Kaufprozess läuft...";
+  startButton.innerHTML = "Verkaufprozess läuft...";
   if (getAvailableMerchants() === 0) {
     resetCountdown();
     return;
