@@ -80,9 +80,9 @@ async function scriptRunner() {
       insertRessourceValue(RESSOURCE, SELL_AMOUNT);
       await sleep(getRandomSleepTime(200, 400));
       await triggerSell();
+      if (getAvailableMerchants() === 0) break;
+      await sleep(getRandomSleepTime(5000, 6000));
     }
-    await sleep(getRandomSleepTime(5000, 6000));
-    if (getAvailableMerchants() === 0) break;
   }
   resetCountdown();
 }
