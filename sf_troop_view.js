@@ -1,4 +1,7 @@
 const getTroops = () => {
+  let tSpear = 0;
+  let tSword = 0;
+  let tHeavy = 0;
   let off3000 = 0;
   let off4000 = 0;
   let off5000 = 0;
@@ -10,12 +13,25 @@ const getTroops = () => {
     .find("tr")
     .each((i, village) => {
       if (i === 0) return;
+      tSpear += parseInt(
+        $(village).children("td:nth-child(2)").text().trim(),
+        10
+      );
+
+      tSword += parseInt(
+        $(village).children("td:nth-child(3)").text().trim(),
+        10
+      );
       const axes = parseInt(
         $(village).children("td:nth-child(4)").text().trim(),
         10
       );
       const lights = parseInt(
         $(village).children("td:nth-child(6)").text().trim(),
+        10
+      );
+      tHeavy += parseInt(
+        $(village).children("td:nth-child(7)").text().trim(),
         10
       );
       const katas = parseInt(
@@ -39,7 +55,18 @@ const getTroops = () => {
         katas100p++;
       }
     });
-  return { off3000, off4000, off5000, off6000p, katas30x100, katas100p };
+
+  return {
+    tSpear,
+    tSword,
+    tHeavy,
+    off3000,
+    off4000,
+    off5000,
+    off6000p,
+    katas30x100,
+    katas100p,
+  };
 };
 
 const getUserName = () => {
@@ -107,6 +134,9 @@ const renderTroopsAsTable = () => {
 
   if (Object.keys(currentTroops).length > 0) {
     const totalCounters = {
+      tSpear: 0,
+      tSword: 0,
+      tHeavy: 0,
       off3000: 0,
       off4000: 0,
       off5000: 0,
@@ -125,6 +155,9 @@ const renderTroopsAsTable = () => {
     const userRows = Object.keys(currentTroopsOrderedByUserName)
       .map((userName) => {
         const {
+          tSpear,
+          tSword,
+          tHeavy,
           off3000,
           off4000,
           off5000,
@@ -133,6 +166,9 @@ const renderTroopsAsTable = () => {
           katas100p,
         } = currentTroops[userName].troopValues;
 
+        totalCounters.tSpear += tSpear;
+        totalCounters.tSword += tSword;
+        totalCounters.tHeavy += tHeavy;
         totalCounters.off3000 += off3000;
         totalCounters.off4000 += off4000;
         totalCounters.off5000 += off5000;
@@ -144,6 +180,9 @@ const renderTroopsAsTable = () => {
         const lastUpdatedStr = isoDateToString(lastUpdated);
         return `<tr>
      <td>${userName}</td>
+     <td>${tSpear}</td>
+     <td>${tSword}</td>
+     <td>${tHeavy}</td>
      <td>${off3000}</td>
      <td>${off4000}</td>
      <td>${off5000}</td>
@@ -155,10 +194,11 @@ const renderTroopsAsTable = () => {
       })
       .join("");
 
-    console.log(totalCounters);
-
     const totalRow = `<tr>
     <th style="font-weight: bold;">Gesamt</th>
+    <th>${totalCounters.tSpear}</th>
+    <th>${totalCounters.tSword}</th>
+    <th>${totalCounters.tHeavy}</th>
     <th>${totalCounters.off3000}</th>
     <th>${totalCounters.off4000}</th>
     <th>${totalCounters.off5000}</th>
@@ -174,6 +214,9 @@ const renderTroopsAsTable = () => {
       <tbody>
          <tr>
             <th>Spieler</th>
+            <th>Speer</th>
+            <th>Schwert</th>
+            <th>Skav</th>
             <th>3k+ Off</th>
             <th>4k+ Off</th>
             <th>5k+ Off</th>
